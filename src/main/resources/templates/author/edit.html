@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Author Edit</title>
+</head>
+<body>
+<h1>Library Author Edit</h1>
+
+<form th:action="@{/author/edit/save}" th:object="${author}" method="POST">
+  <input th:field="${author.id}" type="hidden">
+  <label>
+    <input th:field="${author.firstName}" required placeholder="First name">
+  </label><br>
+  <label>
+    <input th:field="${author.lastName}" required placeholder="Lastname">
+  </label><br>
+  <label>
+    <input th:field="${author.nationality}" required placeholder="Nationality">
+  </label><br>
+  <button type="submit">Save</button>
+</form>
+
+</body>
+</html>

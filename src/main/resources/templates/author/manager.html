@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Author Manager</title>
+</head>
+
+<script>
+    function deleteAuthor(id) {
+        if (confirm("Are you sure you want to delete this author?")) {
+            fetch('/author/delete/' + id, {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    alert("Author deleted successfully");
+                    window.location.reload();
+                } else {
+                    alert("Error deleting author");
+                }
+            });
+        }
+    }
+
+    function editAuthor(id) {
+        window.location.href = "/author/edit/" + id;
+    }
+</script>
+
+<body>
+<h1>Library Author Manager</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Nationality</th>
+        <th>Action</th>
+    </tr>
+    <tr data-th-each="author: ${authors}">
+        <td data-th-text="${author.id}"></td>
+        <td data-th-text="${author.firstName}"></td>
+        <td data-th-text="${author.lastName}"></td>
+        <td data-th-text="${author.nationality}"></td>
+        <td>
+            <button th:onclick="|editAuthor(${author.id})|" >Edit</button>
+            <button th:onclick="|deleteAuthor(${author.id})|" >Delete</button>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package com.unifal.entities;
+package com.unifal.library.entity;
 
 
 import jakarta.persistence.*;
@@ -18,7 +18,7 @@ public class Book implements Serializable {
     private Integer id;
 
     private String title;
-    private Integer year;
+    private Integer publication_year;
     private Integer pages;
 
 
