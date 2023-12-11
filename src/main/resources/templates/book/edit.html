@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Book Edit</title>
+</head>
+<body>
+<h1>Library Book Edit</h1>
+
+<form th:action="@{/book/edit/save}" method="POST" th:object="${book}">
+  <input th:field="${book.id}" type="hidden">
+  <label>
+    <input th:field="${book.title}" required placeholder="Title">
+  </label><br>
+  <label>
+    <input th:field="${book.publication_year}" type="number" required placeholder="Publication Year">
+  </label><br>
+  <label>
+    <input th:field="${book.pages}" type="number" required placeholder="Pages">
+  </label><br>
+  <label>
+    <select th:field="*{author}">
+      <option value="">Select Author</option>
+      <option th:each="author : ${authors}"
+              th:value="${author.id}"
+              th:text="${author.firstName} + ' ' + ${author.lastName}">Author Name</option>
+    </select>
+  </label><br>
+  <button type="submit">Save</button>
+</form>
+
+</body>
+</html>

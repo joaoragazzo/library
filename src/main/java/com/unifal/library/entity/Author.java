@@ -1,4 +1,4 @@
-package com.unifal.entities;
+package com.unifal.library.entity;
 
 
 import jakarta.persistence.*;
@@ -18,8 +18,11 @@ public class Author implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String first_name;
-    private String last_name;
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
     private String nationality;
 
     @OneToMany(mappedBy = "author")

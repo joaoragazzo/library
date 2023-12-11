@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Book Manager</title>
+    <script>
+        function deleteBook(id) {
+            if (confirm("Are you sure you want to delete this book?")) {
+                fetch('/book/delete/' + id, {
+                    method: 'POST'
+                }).then(response => {
+                    if (response.ok) {
+                        alert("Book deleted successfully");
+                        window.location.reload();
+                    } else {
+                        alert("Error deleting book");
+                    }
+                });
+            }
+        }
+
+        function editBook(id) {
+            window.location.href = "/book/edit/" + id;
+        }
+    </script>
+</head>
+<body>
+<h1>Library Book Manager</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Publication Year</th>
+        <th>Pages</th>
+        <th>Author First Name</th>
+        <th>Author Last Name</th>
+        <th>Action</th>
+    </tr>
+    <tr data-th-each="book: ${books}">
+        <td data-th-text="${book.id}"></td>
+        <td data-th-text="${book.title}"></td>
+        <td data-th-text="${book.publication_year}"></td>
+        <td data-th-text="${book.pages}"></td>
+        <td data-th-text="${book.getAuthor().firstName}"></td>
+        <td data-th-text="${book.getAuthor().lastName}"></td>
+        <td>
+            <button th:onclick="|editBook(${book.id})|">Edit</button>
+            <button th:onclick="|deleteBook(${book.id})|">Delete</button>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>
