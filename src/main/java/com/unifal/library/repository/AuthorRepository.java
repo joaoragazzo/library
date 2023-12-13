@@ -5,4 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AuthorRepository extends JpaRepository<Author, Integer> {
     public Boolean existsAuthorByFirstNameAndLastName(String firstName, String lastName);
+
+    public Boolean existsAuthorByFirstName(String firstName);
+
+    public Boolean existsAuthorByLastName(String lastName);
 }
