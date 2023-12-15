@@ -45,11 +45,11 @@ public class BookServiceTests {
     @Test
     @DisplayName("#deleteBookById > When the ID is valid > do not throw a exception")
     void deleteBookByIdWhenIdIsValid(){
-        int validId = 1;
+        int Id = 1;
 
-        bookservice.deleteBookById(validId);
+        bookservice.deleteBookById(Id);
 
-        Mockito.verify(bookRepository).deleteById(validId);
+        Mockito.verify(bookRepository).deleteById(Id);
     }
 
     @Test
@@ -188,7 +188,7 @@ public class BookServiceTests {
         book.setPublication_year(2003);
         Assertions.assertThrows(
                 InvalidParameter.class,
-                () -> bookservice.saveNewBook(book)
+                () -> bookservice.saveEditedBook(book)
         );
     }
 
@@ -203,7 +203,7 @@ public class BookServiceTests {
         book.setPublication_year(2003);
         Assertions.assertThrows(
                 InvalidParameter.class,
-                () -> bookservice.saveNewBook(book)
+                () -> bookservice.saveEditedBook(book)
         );
     }
 
@@ -220,7 +220,7 @@ public class BookServiceTests {
         book.setPublication_year(2003);
         Assertions.assertThrows(
                 InvalidParameter.class,
-                () -> bookservice.saveNewBook(book)
+                () -> bookservice.saveEditedBook(book)
         );
     }
 
@@ -237,7 +237,7 @@ public class BookServiceTests {
         book.setPublication_year(null);
         Assertions.assertThrows(
                 InvalidParameter.class,
-                () -> bookservice.saveNewBook(book)
+                () -> bookservice.saveEditedBook(book)
         );
     }
 
@@ -254,7 +254,7 @@ public class BookServiceTests {
         book.setPublication_year(2003);
         Assertions.assertThrows(
                 InvalidParameter.class,
-                () -> bookservice.saveNewBook(book)
+                () -> bookservice.saveEditedBook(book)
         );
     }
 
@@ -276,7 +276,7 @@ public class BookServiceTests {
 
         Assertions.assertThrows(
                 BookAlreadyExists.class,
-                () -> bookservice.saveNewBook(book)
+                () -> bookservice.saveEditedBook(book)
         );
     }
 
