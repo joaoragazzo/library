@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+
 @SpringBootTest
 public class BookServiceTests {
 
@@ -42,13 +43,17 @@ public class BookServiceTests {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("#deleteBookById > When the ID is valid > do not throw a exception")
     void deleteBookByIdWhenIdIsValid(){
+        int validId = 1;
+
+        bookservice.deleteBookById(validId);
+
+        Mockito.verify(bookRepository).deleteById(validId);
     }
 
     @Test
-    @DisplayName("")
-    void saveNewBookWhenTitleIsNull(){
+    @DisplayName("#saveNewBook > When title is null > throw an InvalidParameter exception")    void saveNewBookWhenTitleIsNull(){
         Author author = new Author();
         author.setFirstName("Matheus");
         Book book = new Book();
@@ -64,7 +69,7 @@ public class BookServiceTests {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("#saveNewBook > When author is null > throw an InvalidParameter exception")
     void saveNewBookWhenAuthorIsNull(){
         Book book = new Book();
         book.setId(null);
@@ -79,7 +84,7 @@ public class BookServiceTests {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("#saveNewBook > When page number is null > throw an InvalidParameter exception")
     void saveNewBookWhenPageNumberIsNull(){
         Author author = new Author();
         author.setFirstName("Matheus");
@@ -96,7 +101,7 @@ public class BookServiceTests {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("#saveNewBook > When publication year is null > throw an InvalidParameter exception")
     void saveNewBookWhenPublicationYearIsNull(){
         Author author = new Author();
         author.setFirstName("Matheus");
@@ -113,7 +118,7 @@ public class BookServiceTests {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("#saveNewBook > When all parameters are null > throw an InvalidParameter exception")
     void saveNewBookWhenAllParametersAreNull() {
         Book book = new Book();
         book.setId(null);
@@ -128,7 +133,7 @@ public class BookServiceTests {
 
     }
     @Test
-    @DisplayName("")
+    @DisplayName("#saveNewBook > When book already exists > throw a BookAlreadyExists exception")
     void saveNewBookWhenBookAlreadyExists() {
         Author author = new Author();
         author.setFirstName("Matheus");
@@ -150,7 +155,7 @@ public class BookServiceTests {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("#saveNewBook > When parameters are valid and book does not exist > do not throw exception")
     void saveNewBookWhenParametersAreNotNullAndBookDoesNotExists() {
         Author author = new Author();
         author.setFirstName("Matheus");
@@ -168,5 +173,148 @@ public class BookServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> bookservice.saveNewBook(book)
         );
+    }
+
+    @Test
+    @DisplayName("#saveEditedBook > When title is null > throw an InvalidParameter exception")
+    void saveEditedBookWhenTitleIsNull(){
+        Author author = new Author();
+        author.setFirstName("Matheus");
+        Book book = new Book();
+        book.setId(1);
+        book.setAuthor(author);
+        book.setTitle(null);
+        book.setPages(100);
+        book.setPublication_year(2003);
+        Assertions.assertThrows(
+                InvalidParameter.class,
+                () -> bookservice.saveNewBook(book)
+        );
+    }
+
+    @Test
+    @DisplayName("#saveEditedBook > When author is null > throw an InvalidParameter exception")
+    void saveEditedBookWhenAuthorIsNull(){
+        Book book = new Book();
+        book.setId(1);
+        book.setAuthor(null);
+        book.setTitle("Titulo");
+        book.setPages(100);
+        book.setPublication_year(2003);
+        Assertions.assertThrows(
+                InvalidParameter.class,
+                () -> bookservice.saveNewBook(book)
+        );
+    }
+
+    @Test
+    @DisplayName("#saveEditedBook > When pages is null > throw an InvalidParameter exception")
+    void saveEditedBookWhenPagesIsNull(){
+        Author author = new Author();
+        author.setFirstName("Matheus");
+        Book book = new Book();
+        book.setId(1);
+        book.setAuthor(author);
+        book.setTitle("Titulo");
+        book.setPages(null);
+        book.setPublication_year(2003);
+        Assertions.assertThrows(
+                InvalidParameter.class,
+                () -> bookservice.saveNewBook(book)
+        );
+    }
+
+    @Test
+    @DisplayName("#saveEditedBook > When publication year is null > throw an InvalidParameter exception")
+    void saveEditedBookWhenPublicationYearIsNull(){
+        Author author = new Author();
+        author.setFirstName("Matheus");
+        Book book = new Book();
+        book.setId(1);
+        book.setAuthor(author);
+        book.setTitle("Titulo");
+        book.setPages(100);
+        book.setPublication_year(null);
+        Assertions.assertThrows(
+                InvalidParameter.class,
+                () -> bookservice.saveNewBook(book)
+        );
+    }
+
+    @Test
+    @DisplayName("#saveEditedBook > When ID is null > throw an InvalidParameter exception")
+    void saveEditedBookWhenIdIsNull(){
+        Author author = new Author();
+        author.setFirstName("Matheus");
+        Book book = new Book();
+        book.setId(1);
+        book.setAuthor(author);
+        book.setTitle("Titulo");
+        book.setPages(100);
+        book.setPublication_year(2003);
+        Assertions.assertThrows(
+                InvalidParameter.class,
+                () -> bookservice.saveNewBook(book)
+        );
+    }
+
+    @Test
+    @DisplayName("#saveEditedBook > When parameters are valid and book already exists > throw a BookAlreadyExists exception")
+    void saveEditedBookWhenParametersAreNotNullAndBookAlreadyExists(){
+        Author author = new Author();
+        author.setFirstName("Matheus");
+        Book book = new Book();
+        book.setId(1);
+        book.setAuthor(author);
+        book.setTitle("Titulo");
+        book.setPages(100);
+        book.setPublication_year(2003);
+
+        Mockito.when(
+                bookRepository.existsByTitle(book.getTitle())
+        ).thenReturn(Boolean.TRUE);
+
+        Assertions.assertThrows(
+                BookAlreadyExists.class,
+                () -> bookservice.saveNewBook(book)
+        );
+    }
+
+    @Test
+    @DisplayName("#saveEditedBook > When parameters are valid > do not throw exception")
+    void saveEditedBookWhenParametersAreNotNull(){
+        Author author = new Author();
+        author.setFirstName("Matheus");
+        Book book = new Book();
+        book.setId(1);
+        book.setAuthor(author);
+        book.setTitle("Titulo");
+        book.setPages(100);
+        book.setPublication_year(2003);
+
+        Mockito.when(
+                bookRepository.existsByTitle(book.getTitle())
+        ).thenReturn(Boolean.FALSE);
+
+        Assertions.assertDoesNotThrow(
+                () -> bookservice.saveNewBook(book)
+        );
+    }
+
+    @Test
+    @DisplayName("#getBookById > When ID is null > throw an InvalidParameter exception")
+    void getBookIdWhenIdIsNull(){
+        Assertions.assertThrows(
+                InvalidParameter.class,
+                () -> bookservice.getBookById(null)
+        );
+    }
+
+    @Test
+    @DisplayName("#getBookById > When ID is valid > does not throw a exception")
+    void getBookWhenIdIsNotNull(){
+        bookservice.getBookById(1);
+
+        Mockito.verify(bookRepository).findById(1);
     }
 }
