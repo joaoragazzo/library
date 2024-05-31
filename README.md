@@ -13,7 +13,7 @@ projeto foi elaborado com base num sistema de cadastro de livros de uma bibliote
 
 ## Contribuidores ✨
 
-Todas essas pessoas maravilindas ajudaram no desenvolvimento desse jogo
+Todas essas pessoas maravilindas ajudaram no desenvolvimento desse projeto
 
 <table>
   <tbody>
